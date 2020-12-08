@@ -1,22 +1,35 @@
 import csv
 import pandas as pd
 import numpy as np
+import os
 
 class Reader(object):
     """
     Class for reading input files.
     """
 
-    def __init__(self):
-        pass
-
     @staticmethod
-    def read_distances_between_nodes(path_to_file:path)->np.ndarray:
+    def read_distances_between_nodes_in_file(path_to_file:str)->np.ndarray:
         """
         Given an input path file, it reads the distance file. A matrix where d_ij is the distance between nodes i-j.
         Note that d_ij!=d_ji, for generalization purposes.
         """
-        df=pd.read_csv(url=path_to_file,delimiter="\t")
+        df=pd.read_csv(filepath_or_buffer=path_to_file,delimiter="\t",header=None).dropna(axis=1)
         return df.to_numpy()
 
 
+    @staticmethod
+    def read_distances_between_nodes_in_directory(path_to_directory:str)->{}:
+        """
+        Given an input path file, it reads the distance file. A matrix where d_ij is the distance between nodes i-j.
+        Note that d_ij!=d_ji, for generalization purposes.
+        return: A dictionary where "key" is the filein_name and "value" is a numpy.ndarray with all the values.
+        """
+        files_contents={}
+        for root, dirnames, filein_names in os.walk(path_to_directory):
+            for filein_name in filein_names:
+                path_filein=os.sep.join([path_to_directory,filein_name])
+                distances_array=Reader.read_distances_between_nodes_in_file(path_to_file=path_filein)
+                files_contents[filein_name]=distances_array
+
+        return files_contents
