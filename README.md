@@ -1,6 +1,11 @@
 # VRP
 Metaheuristics for a variant of VRP problem
 
+# GENERAL CONSIDERATIONS
+Num. vehicles = num. customers = nodes - 1 (the depot)
+All vehicles can reach at least the farthest node. That means that at worst solution 1 vehicle can serve 1 customer.
+
+
 # DATA GENERATION
 Distances between nodes were obtained from the samples provided by: https://www.mech.kuleuven.be/en/cib/op
 Particularly, for the original dataset used to solve VRPCD: http://web.ntust.edu.tw/~vincent/ovrpcd/
