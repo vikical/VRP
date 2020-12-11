@@ -9,7 +9,6 @@ from src.models.vehicle_allowed_distances import VehicleAllowedDistances
 
 from src.solution_management.solution_cost_calculator import SolutionCostCalculator
 from src.solution_management.solution_initializer import SolutionInitializer
-from src.solution_management.solution_printer import SolutionPrinter
 
 from src.data_generation.vehicle_restrictions_generator import VehicleRestrictionsGenerator
 from src.solution_management.solution_initializer import SolutionInitializer
@@ -42,7 +41,7 @@ def solve(single,din):
     cost_calculator=SolutionCostCalculator(solution=solution)
     cost=cost_calculator.calculate_cost(node_distances=node_distances)
     print("***************" + str(cost))
-    print(SolutionPrinter.to_string_as_list_nodes(solution=solution))
+    print(solution.to_string())
 
 
 

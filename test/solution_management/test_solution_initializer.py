@@ -12,17 +12,21 @@ def init_random_seed():
     random.seed(a=0)
     
 
-def test_init_randomly_all_customes_are_visited_and_depot_visited_2(init_random_seed):
+def test_init_randomly_all_customes_are_visited(init_random_seed):
     init_random_seed
     node_distances=NodeDistances(distances=np.array([[0, 1, 1, 1],[1, 0, 1,1],[1, 1, 0,1],[1,1,1,0]]))
     vehicle_distances=VehicleAllowedDistances(distances=np.array([1, 1,1]))
 
     initializer=SolutionInitializer(node_distances=node_distances,vehicle_allowed_distances=vehicle_distances)
     solution=initializer.init_randomly()
+    
+    vehicle_routes=solution.vehicle_routes
+    num_node1=np.where(vehicle_routes==1)[0]
+    num_node2=np.where(vehicle_routes==2)[0]
+    num_node3=np.where(vehicle_routes==3)[0]
 
-    go_and_back_trips=np.sum(a=solution.vehicle_routes,axis=0)
-    nodes_visited=np.sum(a=go_and_back_trips,axis=1)
-
-    assert (nodes_visited[0]==3 and nodes_visited[1]==1 and nodes_visited[2]==1 and nodes_visited[3]==1) , "Depot is visited three times (by each car) and customers once (one per car)"
+    assert len(num_node1)==1, "Node 1 should be only once"
+    assert len(num_node2)==1, "Node 2 should be only once"
+    assert len(num_node3)==1, "Node 3 should be only once"
     
 

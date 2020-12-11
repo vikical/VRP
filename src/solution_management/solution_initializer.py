@@ -14,7 +14,7 @@ class SolutionInitializer(object):
         self.vehicle_allowed_distances=vehicle_allowed_distances
 
 
-    def init_randomly(self)->Solution:
+    def init_randomly_old(self)->Solution:
         """
         For each customer we randomly select a vehicle. If the fleet contains vehicles which cannot performe a certain
         trip, it may lead to unfeasible solutions. We allow this since we are in the initial solution.
@@ -36,4 +36,22 @@ class SolutionInitializer(object):
 
         return Solution(vehicle_routes=vehicle_routes)
 
+    def init_randomly(self)->Solution:
+        """
+        For each customer we randomly select a vehicle. If the fleet contains vehicles which cannot performe a certain
+        trip, it may lead to unfeasible solutions. We allow this since we are in the initial solution.
+        """
+        num_vehicles=self.vehicle_allowed_distances.get_number_of_vehicles()
+        num_nodes=self.node_distaces.get_number_of_nodes()
+        vehicle_routes=np.zeros([num_vehicles,num_nodes],dtype=int)
+
+        for node in range(1,num_nodes):
+            vehicle=random.randint(0,num_vehicles-1)
+            route=vehicle_routes[vehicle]
+            available_indexes=np.where(route==0)[0]
+            index=available_indexes[0]
+            vehicle_routes[vehicle][index]=node 
+
+
+        return Solution(vehicle_routes=vehicle_routes)
 
