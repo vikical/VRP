@@ -17,7 +17,7 @@ def test_init_randomly_all_customes_are_visited_and_depot_visited_2(init_random_
     node_distances=NodeDistances(distances=np.array([[0, 1, 1, 1],[1, 0, 1,1],[1, 1, 0,1],[1,1,1,0]]))
     vehicle_distances=VehicleAllowedDistances(distances=np.array([1, 1,1]))
 
-    initializer=SolutionInitializer(node_distances=node_distances,vehicles_allowed_distances=vehicle_distances)
+    initializer=SolutionInitializer(node_distances=node_distances,vehicle_allowed_distances=vehicle_distances)
     solution=initializer.init_randomly()
 
     go_and_back_trips=np.sum(a=solution.vehicle_routes,axis=0)

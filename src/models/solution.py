@@ -8,3 +8,7 @@ class Solution(object):
     """
     def __init__(self, vehicle_routes:np.ndarray):
         self.vehicle_routes=vehicle_routes
+
+
+
+    

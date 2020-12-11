@@ -5,14 +5,13 @@ from src.models.node_distances import NodeDistances
 from src.models.vehicle_allowed_distances import VehicleAllowedDistances
 from src.models.solution import Solution
 
-
 class SolutionInitializer(object):
     """
     Initializes a solution. 
     """
-    def __init__(self,node_distances:NodeDistances, vehicles_allowed_distances:VehicleAllowedDistances):
+    def __init__(self,node_distances:NodeDistances, vehicle_allowed_distances:VehicleAllowedDistances):
         self.node_distaces=node_distances
-        self.vehicles_allowed_distances=vehicles_allowed_distances
+        self.vehicle_allowed_distances=vehicle_allowed_distances
 
 
     def init_randomly(self)->Solution:
@@ -20,7 +19,7 @@ class SolutionInitializer(object):
         For each customer we randomly select a vehicle. If the fleet contains vehicles which cannot performe a certain
         trip, it may lead to unfeasible solutions. We allow this since we are in the initial solution.
         """
-        num_vehicles=self.vehicles_allowed_distances.get_number_of_vehicles()
+        num_vehicles=self.vehicle_allowed_distances.get_number_of_vehicles()
         num_nodes=self.node_distaces.get_number_of_nodes()
 
         vehicles=list(range(0,num_vehicles))
