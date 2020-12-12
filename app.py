@@ -7,7 +7,7 @@ from src.file_management import files_nomenclature as fn
 from src.models.node_distances import NodeDistances
 from src.models.vehicle_allowed_distances import VehicleAllowedDistances
 
-from src.solution_management.solution_cost_calculator import SolutionCostCalculator
+from src.solution_management.solution_restrictions_calculator import SolutionRestrictionsCalculator
 from src.solution_management.solution_initializer import SolutionInitializer
 
 from src.data_generation.vehicle_restrictions_generator import VehicleRestrictionsGenerator
@@ -38,8 +38,10 @@ def solve(single,din):
 
     initializer=SolutionInitializer(node_distances=node_distances,vehicle_allowed_distances=vehicle_allowed_distances)
     solution=initializer.init_randomly()
-    cost_calculator=SolutionCostCalculator(solution=solution)
-    cost=cost_calculator.calculate_cost(node_distances=node_distances)
+    restrictions_calculator=SolutionRestrictionsCalculator( solution=solution, \
+                                                            node_distances=node_distances, \
+                                                            vehicle_allowed_distances=vehicle_allowed_distances)
+    cost=restrictions_calculator.calculate_cost()
     print("***************" + str(cost))
     print(solution.to_string())
 
