@@ -7,7 +7,7 @@ from src.neighborhoods.reverse_order import ReverseOrder
 def test_reverse_nodes_from_5_to_2():
     route=np.array([0, 1, 2, 3, 4, 5, 6, 7])
 
-    result=ReverseOrder(solution=None).reverse_from_node1_to_node2(route=route,index_node1=5, index_node2=2)
+    result=ReverseOrder(solution=None,solution_restrictions_calculator=None).reverse_from_node1_to_node2(route=route,index_node1=5, index_node2=2)
     
 
     assert result[0]==0 , "1st element should be 0"

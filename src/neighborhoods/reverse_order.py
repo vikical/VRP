@@ -27,6 +27,14 @@ class ReverseOrder(Neighborhood):
         new_route=self.reverse_from_node1_to_node2(route=solution.vehicle_routes[vehicle_involved],index_node1=index_node1, index_node2=index_node2)
         solution.vehicle_routes[vehicle_involved]=self._move_depot_to_the_end(route=new_route) #This shouldn't be necessary. We put in here as a precaution.
 
+        #Verify movements.
+        valid=self._check_valid_modifications(new_solution=solution,vehicles_involved=vehicles_involved)
+        if valid==False:
+            solution.is_valid=valid
+
+        #Set new cost.
+        solution.cost=self._update_solution_cost(new_solution=solution,vehicles_involved=vehicles_involved)
+
         return solution
 
     def reverse_from_node1_to_node2(self,route:np.ndarray, index_node1:int, index_node2:int)->np.ndarray:

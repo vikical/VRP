@@ -28,6 +28,14 @@ class SwapCustomers(Neighborhood):
         new_route=self._move_depot_to_the_end(route=new_route) #This shouldn't be necessary. We put in it here as a precaution.
         solution.vehicle_routes[vehicle_involved]=new_route
 
+        #Verify movements.
+        valid=self._check_valid_modifications(new_solution=solution,vehicles_involved=[vehicle_involved])
+        if valid==False:
+            solution.is_valid=valid
+
+        #Set new cost.
+        solution.cost=self._update_solution_cost(new_solution=solution,vehicles_involved=[vehicle_involved])
+
         return solution
 
     def swap_nodes(self,route:np.ndarray,index_node1:int, index_node2:int)->np.ndarray:

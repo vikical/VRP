@@ -31,6 +31,14 @@ class MoveCustomer(Neighborhood):
         solution.vehicle_routes[veh1]=self._move_depot_to_the_end(route=solution.vehicle_routes[veh1])
         solution.vehicle_routes[veh2]=self._move_depot_to_the_end(route=solution.vehicle_routes[veh2])
 
+        #Verify movements.
+        valid=self._check_valid_modifications(new_solution=solution,vehicles_involved=vehicles_involved)
+        if valid==False:
+            solution.is_valid=valid
+
+        #Set new cost.
+        solution.cost=self._update_solution_cost(new_solution=solution,vehicles_involved=vehicles_involved)
+
         return solution
 
     def __get_node_from_route(self,route:np.ndarray)->int:

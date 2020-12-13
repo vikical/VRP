@@ -8,7 +8,7 @@ from src.models.solution import Solution
 def test_move_customer_from_one_route_to_another():
     vehicle_routes=np.array([[1, 2, 3, 4, 5, 0, 0, 0], [11, 12, 13, 14, 15, 0, 0, 0]])
     solution=Solution(vehicle_routes=vehicle_routes)
-    move_customer=MoveCustomer(solution=solution)
+    move_customer=MoveCustomer(solution=solution,solution_restrictions_calculator=None)
     new_solution=move_customer.move_nodes(vehicle1=0, vehicle2=1, node_index_in1=3,node_index_in2=0)
 
     route1=new_solution.vehicle_routes[0]

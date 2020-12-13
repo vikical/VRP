@@ -7,6 +7,8 @@ class Solution(object):
     """
     def __init__(self, vehicle_routes:np.ndarray):
         self.vehicle_routes=vehicle_routes
+        self.cost=-1
+        self.is_valid=None
 
     def to_string(self)->str:
         """
@@ -18,6 +20,7 @@ class Solution(object):
             string_solution=string_solution+np.array_str(a=self.vehicle_routes[v_index])
         
         return string_solution
+
 
 
 
