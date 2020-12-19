@@ -36,11 +36,13 @@ class BVNS(Metaheuristic):
             new_solution=self.shake_solution(neighborhood_name=neighborhood_name)
 
             #Local Search
+            print("Applying "+neighborhood_name+" ....................")
             ls=LS(solution=new_solution, neighborhood_name=neighborhood_name, solution_restrictions_calculator=self.solution_restrictions_calculator, \
             search_type=self.search_type,num_iteration_per_search=self.num_iteration_per_search)
             
             #Update general solution
             self.solution=ls.run()
+            print("Current cost: "+str(self.solution.cost))
 
         return self.solution
 

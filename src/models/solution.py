@@ -17,10 +17,12 @@ class Solution(object):
         string_solution=""
         for v_index in range(0,self.vehicle_routes.shape[0]):
             string_solution=string_solution+"\n"+"VEHICLE:"+str(v_index)+"\n"
-            string_solution=string_solution+np.array_str(a=self.vehicle_routes[v_index])
+            string_solution=string_solution+self.route_to_string(vehicle_route=self.vehicle_routes[v_index])
         
         return string_solution
 
+    def route_to_string(self,vehicle_route:np.ndarray)->str:
+        return np.array_str(a=vehicle_route)
 
 
 
