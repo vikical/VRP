@@ -14,8 +14,8 @@ def test_maximum_allowed_distance_returns_longer_distance_times_number_nodes():
     maximum_allowed=VehicleRestrictionsGenerator.get_maximum_allowed_distance(distances_between_nodes=distances)
     assert 12==maximum_allowed, "The max of distance is 12"
 
-def test_get_distances_return_as_many_vehicles_as_nodes():
+def test_get_distances_return_as_many_vehicles_as_customers():
     node_distances=np.ndarray(shape=(3,3), dtype="int", buffer=np.array([[0, 1, 3], [4, 0, 1], [4,1,0]]))
     generator= VehicleRestrictionsGenerator(distances_between_nodes=node_distances)
     vehicle_distances=generator.get_allowed_distances()
-    assert np.size(node_distances,axis=0)==np.size(vehicle_distances,axis=0), "There should be as many vehicles as nodes"
+    assert 2==np.size(vehicle_distances,axis=0), "There should be as many vehicles as customers (nodes -1, the depot)"

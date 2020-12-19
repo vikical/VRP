@@ -36,7 +36,7 @@ class VehicleRestrictionsGenerator():
         max_distance=self.get_maximum_allowed_distance(distances_between_nodes=self.distances_between_nodes)
         
         distances=[]
-        for i in range(0,np.size(self.distances_between_nodes,axis=0)):
+        for i in range(0,np.size(self.distances_between_nodes,axis=0)-1):
             d = random.randint(min_distance,max_distance)
             distances.append(d)
 
