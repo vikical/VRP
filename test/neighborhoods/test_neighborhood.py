@@ -12,7 +12,7 @@ from src.models.vehicle_allowed_distances import VehicleAllowedDistances
 def test_move_depot_to_the_end_when_it_is_in_4th_position():
     route=np.array([1, 2, 3, 0, 4, 5, 0, 0])
 
-    result=Neighborhood(solution=None,solution_restrictions_calculator=None)._move_depot_to_the_end(route=route)
+    result=Neighborhood(solution_restrictions_calculator=None)._move_depot_to_the_end(route=route)
     
 
     assert result[0]==1 , "1st element should be 1"
@@ -27,7 +27,7 @@ def test_move_depot_to_the_end_when_it_is_in_4th_position():
 def test_move_depot_to_the_end_when_it_is_in_1st_position():
     route=np.array([0, 1, 2, 3, 4, 5, 0, 0])
 
-    result=Neighborhood(solution=None,solution_restrictions_calculator=None)._move_depot_to_the_end(route=route)
+    result=Neighborhood(solution_restrictions_calculator=None)._move_depot_to_the_end(route=route)
     
 
     assert result[0]==1 , "1st element should be 1"
@@ -42,7 +42,7 @@ def test_move_depot_to_the_end_when_it_is_in_1st_position():
 def test_move_depot_to_the_end_when_it_is_in_last_position():
     route=np.array([1, 2, 3, 4, 5, 0, 0, 0])
 
-    result=Neighborhood(solution=None,solution_restrictions_calculator=None)._move_depot_to_the_end(route=route)
+    result=Neighborhood(solution_restrictions_calculator=None)._move_depot_to_the_end(route=route)
     
 
     assert result[0]==1 , "1st element should be 1"
@@ -62,8 +62,8 @@ def test_update_cost_solution_when_2_routes_change():
     calculator=SolutionRestrictionsCalculator(node_distances=node_distances,vehicle_allowed_distances=vehicle_allowed_distances)
 
 
-    cost=Neighborhood(solution=solution1,solution_restrictions_calculator=calculator). \
-        _update_solution_cost(new_solution=solution2,vehicles_involved=[1,2])
+    cost=Neighborhood(solution_restrictions_calculator=calculator). \
+        _update_solution_cost(old_solution=solution1,new_solution=solution2,vehicles_involved=[1,2])
     
 
     assert cost==41 , "Update cost should be 41"

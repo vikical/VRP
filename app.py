@@ -13,6 +13,36 @@ from src.solution_management.solution_initializer import SolutionInitializer
 from src.data_generation.vehicle_restrictions_generator import VehicleRestrictionsGenerator
 from src.solution_management.solution_initializer import SolutionInitializer
 
+from src.neighborhoods.neighborhood_factory import NeighborhoodFactory
+
+from src.metaheuristics.ls import LS
+from src.metaheuristics.vnd import VND
+from src.metaheuristics.bvns import BVNS
+from src.metaheuristics.metaheuristic import Metaheuristic
+
+
+
+
+def get_metaheuristic(metaheu:str, solution_restrictions_calculator:SolutionRestrictionsCalculator)-> Metaheuristic:
+    metaheu_obj=None
+    if metaheu=="ls":
+        metaheu_obj=LS(solution=None, neighborhood_name=NeighborhoodFactory.MOVE_CUSTOMER, \
+            solution_restrictions_calculator=solution_restrictions_calculator, \
+         search_type=Metaheuristic.GREEDY_SEARCH, num_iteration_per_search=1000)
+    if metaheu=="bvns":
+        metaheu_obj=BVNS(solution=None, shaking_intensity=3,
+                neighborhood_names=[NeighborhoodFactory.MOVE_CUSTOMER, NeighborhoodFactory.SWAP_CUSTOMERS, NeighborhoodFactory.REVERSE_ORDER], \
+                solution_restrictions_calculator=solution_restrictions_calculator, \
+                search_type=Metaheuristic.GREEDY_SEARCH, num_iteration_per_search=1000)
+    if metaheu=="vnd":
+        metaheu_obj=VND(solution=None, \
+                neighborhood_names=[NeighborhoodFactory.MOVE_CUSTOMER, NeighborhoodFactory.SWAP_CUSTOMERS, NeighborhoodFactory.REVERSE_ORDER], \
+                solution_restrictions_calculator=solution_restrictions_calculator, \
+                search_type=Metaheuristic.GREEDY_SEARCH, num_iteration_per_search=1000)
+
+
+    return metaheu_obj
+
 @click.group()
 def vrp():
     pass
@@ -28,22 +58,21 @@ def man():
            man: show the manual""")
 
 @vrp.command()
+@click.option("--metaheu", help="Type of metaheuristic: ls-local search; bvns-basic VNS")
 @click.option("--single", help="Number of the problem instance to be solved, i.e. the NUMBER in the dist_NUMBER.txt files")
 @click.option("--din", type=click.Path(exists=True), help="Path to the directory where files with distances between nodes and for vehicles are located. This files should follow reg. exp. dist_NUMBER.txt and veh_dist_NUMBER.txt")
-def solve(single,din):
+def solve(metaheu,single,din):
     path_to_file=os.sep.join([din,fn.PREFFIX_DISTANCE_BETWEEN_NODES+str(single)+".txt"])
     node_distances=NodeDistances(distances=Reader.read_distances_between_nodes_in_file(path_to_file=path_to_file))
     path_to_file=os.sep.join([din,fn.PREFFIX_ALLOWED_DISTANCE_VEHICLES+str(single)+".txt"])
     vehicle_allowed_distances=VehicleAllowedDistances(distances=Reader.read_vehicle_allowed_distances_in_file(path_to_file=path_to_file))
 
-    initializer=SolutionInitializer(node_distances=node_distances,vehicle_allowed_distances=vehicle_allowed_distances)
-    solution=initializer.init_randomly()
-    restrictions_calculator=SolutionRestrictionsCalculator( solution=solution, \
-                                                            node_distances=node_distances, \
-                                                            vehicle_allowed_distances=vehicle_allowed_distances)
-    cost=restrictions_calculator.calculate_cost()
-    print("***************" + str(cost))
-    print(solution.to_string())
+    solution_restrictions_calculator=SolutionRestrictionsCalculator(node_distances=node_distances, vehicle_allowed_distances=vehicle_allowed_distances)
+    metaheu_obj=get_metaheuristic(metaheu=metaheu, solution_restrictions_calculator=solution_restrictions_calculator)
+    
+    solution=metaheu_obj.run()
+    print("solution cost:"+str(solution.cost)+"\n")
+    print("vehicle_routes:\n"+solution.to_string())
 
 
 

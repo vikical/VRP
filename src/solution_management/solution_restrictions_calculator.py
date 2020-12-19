@@ -54,6 +54,7 @@ class SolutionRestrictionsCalculator(object):
         return SolutionRestrictionsCalculator.get_remaining_distance(route=solution.vehicle_routes[vehicle], \
                                             node_distances=self.node_distances, 
                                             allowed_distance=self.vehicle_allowed_distances.distances[vehicle])
+                                            
     
     def check_if_solution_is_valid(self, solution:Solution)->bool:
         """

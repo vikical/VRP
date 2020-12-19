@@ -7,7 +7,7 @@ from src.neighborhoods.swap_customers import SwapCustomers
 def test_swap_node_5_and_2():
     route=np.array([0, 1, 2, 3, 4, 5, 6, 7])
 
-    result=SwapCustomers(solution=None,solution_restrictions_calculator=None).swap_nodes(route=route,index_node1=5, index_node2=2)
+    result=SwapCustomers(solution_restrictions_calculator=None).swap_nodes(route=route,index_node1=5, index_node2=2)
     
 
     assert result[0]==0 , "1st element should be 0"
@@ -22,7 +22,7 @@ def test_swap_node_5_and_2():
 def test_swap_node_1_and_1():
     route=np.array([0, 1, 2, 3, 4, 5, 6, 7])
 
-    result=SwapCustomers(solution=None,solution_restrictions_calculator=None).swap_nodes(route=route,index_node1=1, index_node2=1)
+    result=SwapCustomers(solution_restrictions_calculator=None).swap_nodes(route=route,index_node1=1, index_node2=1)
     
 
     assert result[0]==0 , "1st element should be 0"
@@ -38,7 +38,7 @@ def test_swap_node_1_and_1():
 def test_swap_node_1st_and_last():
     route=np.array([0, 1, 2, 3, 4, 5, 6, 7])
 
-    result=SwapCustomers(solution=None,solution_restrictions_calculator=None).swap_nodes(route=route,index_node1=0, index_node2=7)
+    result=SwapCustomers(solution_restrictions_calculator=None).swap_nodes(route=route,index_node1=0, index_node2=7)
     
 
     assert result[0]==7 , "1st element should be 7"
