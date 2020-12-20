@@ -6,7 +6,7 @@ import numpy as np
 import random
 import copy
 
-class OneCustomerNeighborhood(Neighborhood):
+class OneVehicleNeighborhood(Neighborhood):
     """
     Abstract class for neighborhoods where the solution evolves to the optimal solution, or at least to a local minimum.
     """

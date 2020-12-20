@@ -1,9 +1,9 @@
 from src.models.solution import Solution
-from src.neighborhoods.one_customer_neighborhood import OneCustomerNeighborhood
+from src.neighborhoods.one_vehicle_neighborhood import OneVehicleNeighborhood
 import numpy as np
 import copy
 
-class ReverseOrder(OneCustomerNeighborhood):
+class ReverseOrder(OneVehicleNeighborhood):
     """
     Pick randomly a route and two customers in it. Reverse the order between the customers between those customers.
     """
