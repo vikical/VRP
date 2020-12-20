@@ -30,8 +30,6 @@ class Neighborhood(object):
         instances_involved=range(0,available_instances)
 
         instances=np.random.choice(a=instances_involved,size=needed_instances,replace=False)
-        if needed_instances==1:
-            return instances
 
         return instances
 
