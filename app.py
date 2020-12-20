@@ -35,17 +35,17 @@ def get_metaheuristic(metaheu:str, solution_restrictions_calculator:SolutionRest
     if metaheu=="ls":
         metaheu_obj=LS(solution=None, neighborhood_name=NeighborhoodFactory.MOVE_CUSTOMER, \
                 solution_restrictions_calculator=solution_restrictions_calculator, \
-                search_type=search_type, initialization_type=init, num_iteration_per_search=100)
+                search_type=search_type, initialization_type=init, num_iteration_per_search=number_iterations)
 
     if metaheu=="bvns":
         metaheu_obj=BVNS(solution=None, \
-                neighborhood_names=[NeighborhoodFactory.MOVE_CUSTOMER, NeighborhoodFactory.SWAP_CUSTOMERS, NeighborhoodFactory.REVERSE_ORDER], \
+                neighborhood_names=[NeighborhoodFactory.JOIN_CUSTOMERS,NeighborhoodFactory.MOVE_CUSTOMER, NeighborhoodFactory.SWAP_CUSTOMERS, NeighborhoodFactory.REVERSE_ORDER], \
                 solution_restrictions_calculator=solution_restrictions_calculator, \
                 search_type=search_type, initialization_type=init, num_iteration_per_search=number_iterations)
 
     if metaheu=="vnd":
         metaheu_obj=VND(solution=None, \
-                neighborhood_names=[NeighborhoodFactory.MOVE_CUSTOMER, NeighborhoodFactory.SWAP_CUSTOMERS, NeighborhoodFactory.REVERSE_ORDER], \
+                neighborhood_names=[NeighborhoodFactory.JOIN_CUSTOMERS,NeighborhoodFactory.MOVE_CUSTOMER, NeighborhoodFactory.SWAP_CUSTOMERS, NeighborhoodFactory.REVERSE_ORDER], \
                 solution_restrictions_calculator=solution_restrictions_calculator, \
                 search_type=search_type, initialization_type=init,num_iteration_per_search=number_iterations)
 

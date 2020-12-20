@@ -1,9 +1,9 @@
 from src.models.solution import Solution
-from src.neighborhoods.one_customer_neighborhood import OneCustomerNeighborhood
+from src.neighborhoods.one_vehicle_neighborhood import OneVehicleNeighborhood
 import numpy as np
 import copy
 
-class SwapCustomers(OneCustomerNeighborhood):
+class SwapCustomers(OneVehicleNeighborhood):
     """
     Pick randomly a route and two customers in it. Swap them.
     """

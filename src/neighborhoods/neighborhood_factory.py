@@ -1,4 +1,5 @@
 from src.neighborhoods.neighborhood import Neighborhood
+from src.neighborhoods.join_customers import JoinCustomers
 from src.neighborhoods.move_customer import MoveCustomer
 from src.neighborhoods.reverse_order import ReverseOrder
 from src.neighborhoods.swap_customers import SwapCustomers
@@ -12,14 +13,17 @@ class NeighborhoodFactory(object):
     MOVE_CUSTOMER="move_customer"
     REVERSE_ORDER="reverse_order"
     SWAP_CUSTOMERS="swap_customers"
+    JOIN_CUSTOMERS="join_customers"
 
     @staticmethod
     def create_neighborhood(neighborhood_name:str, solution_restrictions_calculator:SolutionRestrictionsCalculator)->Neighborhood:
+        if neighborhood_name==NeighborhoodFactory.JOIN_CUSTOMERS:
+            return JoinCustomers(solution_restrictions_calculator=solution_restrictions_calculator)
         if neighborhood_name==NeighborhoodFactory.MOVE_CUSTOMER:
             return MoveCustomer(solution_restrictions_calculator=solution_restrictions_calculator)
         if neighborhood_name==NeighborhoodFactory.REVERSE_ORDER:
             return ReverseOrder(solution_restrictions_calculator=solution_restrictions_calculator)
         if neighborhood_name==NeighborhoodFactory.SWAP_CUSTOMERS:
             return SwapCustomers(solution_restrictions_calculator=solution_restrictions_calculator)
-        
+
         return None
