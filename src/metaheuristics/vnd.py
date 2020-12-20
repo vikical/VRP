@@ -14,11 +14,12 @@ class VND(BVNS):
     """
 
     def __init__(self,neighborhood_names:[str],solution:Solution, solution_restrictions_calculator:SolutionRestrictionsCalculator, \
-                search_type:str, num_iteration_per_search:int):
-        super().__init__(neighborhood_names=neighborhood_names,shaking_intensity=0,solution=solution, \
-            solution_restrictions_calculator=solution_restrictions_calculator,search_type=search_type,num_iteration_per_search=num_iteration_per_search)
+                search_type:str, num_iteration_per_search:int, initialization_type:str):
+        super().__init__(neighborhood_names=neighborhood_names,solution=solution, solution_restrictions_calculator=solution_restrictions_calculator, \
+            search_type=search_type,num_iteration_per_search=num_iteration_per_search, initialization_type=initialization_type)
 
 
-
+    def _shake_solution(self,solution: Solution, neighborhood: Neighborhood)->Solution:
+        return solution
 
 

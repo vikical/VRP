@@ -55,7 +55,19 @@ class SolutionRestrictionsCalculator(object):
                                             node_distances=self.node_distances, 
                                             allowed_distance=self.vehicle_allowed_distances.distances[vehicle])
                                             
-    
+    def get_not_empty_vehicle_routes(self,solution:Solution)->np.ndarray:
+        """
+        Get the indexes of the vehicle routes which aren't empty
+        """
+        non_empty_vehicle_routes=[]
+        for v_index in range(0,solution.vehicle_routes.shape[0]):
+            #Depot is always at the end.
+            if solution.vehicle_routes[v_index][0]!=0:
+                non_empty_vehicle_routes.append(v_index)
+
+        return np.array(non_empty_vehicle_routes,dtype=int)
+
+
     def check_if_solution_is_valid(self, solution:Solution)->bool:
         """
         Check if a solution mets the restrictions:
