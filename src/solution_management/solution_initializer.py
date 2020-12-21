@@ -27,13 +27,21 @@ class SolutionInitializer(object):
         """
         return self.__init_solution(initializing_function=self.__assign_nodes_randomly)
 
-    def init_vehicles_with_nodes_sequentially(self)->Solution:
+    def init_one_node_to_one_vehicle(self)->Solution:
         """
-        We assign nodes sequeantially to vehicles till they reach their restriction.
-        This will lead to a valid solution. However we will check it and look for another solution in case we found 
+        We assign randomly one node to one vehicle.
+        This should lead to a valid solution. However we will check it and look for another solution in case we found 
         a no-valid one.
         """
-        return self.__init_solution(initializing_function=self.__assign_nodes_sequentially_to_vehicles)
+        return self.__init_solution(initializing_function=self.__assign_one_node_to_one_vehicle)
+
+    def init_vehicles_with_group_nodes_sequentially(self)->Solution:
+        """
+        We assign nodes sequeantially to vehicles till they reach their restriction.
+        This should lead to a valid solution. However we will check it and look for another solution in case we found 
+        a no-valid one.
+        """
+        return self.__init_solution(initializing_function=self.__assign_group_nodes_sequentially_to_vehicles)
 
 
     def __init_solution(self,initializing_function)->Solution:
@@ -75,7 +83,7 @@ class SolutionInitializer(object):
         return vehicle_routes
 
 
-    def __assign_nodes_sequentially_to_vehicles(self)->np.ndarray:
+    def __assign_group_nodes_sequentially_to_vehicles(self)->np.ndarray:
         """
         We assign nodes sequeantially to vehicles till they reach their restriction.
         This will lead to a valid solution.
@@ -106,4 +114,17 @@ class SolutionInitializer(object):
         
         return vehicle_routes
 
+    def __assign_one_node_to_one_vehicle(self)->np.ndarray:
+        """
+        As Clark and Wright, we assign one node to one vehicle.
+        """
+        num_vehicles=self.vehicle_allowed_distances.get_number_of_vehicles()
+        num_nodes=self.node_distances.get_number_of_nodes()
+        vehicle_routes=np.zeros([num_vehicles,num_nodes],dtype=int)
+        suffled_customers=np.array(range(1,num_nodes),dtype=int)
+        random.shuffle(suffled_customers)
 
+        for index in range(0,num_vehicles):            
+            vehicle_routes[index][0]=suffled_customers[index] 
+
+        return vehicle_routes

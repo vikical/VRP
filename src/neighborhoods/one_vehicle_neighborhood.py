@@ -30,6 +30,8 @@ class OneVehicleNeighborhood(Neighborhood):
         index_node1=nodes_involved[0]
         index_node2=nodes_involved[1]
 
+        #print("index_node1:"+str(index_node1)+" index_node2:"+str(index_node2))
+
         #Reverse route and update it.
         new_solution=copy.deepcopy(solution)
         new_route=self._operation_inside_vehicle_route(route=new_solution.vehicle_routes[vehicle_involved],index_node1=index_node1, index_node2=index_node2)

@@ -44,8 +44,8 @@ class BVNS(Metaheuristic):
         proposed_solution=copy.deepcopy(self.solution)
         while True:
             #Shake solution.
-            print("SHAKE in "+neighborhood_name)
             new_solution=self._shake_solution(neighborhood=neighborhood,solution=proposed_solution)
+            print("SHAKE in "+neighborhood_name+". Shaked cost:"+str(new_solution.cost))
 
             #Local Search
             ls=LS(solution=new_solution, neighborhood_name=neighborhood_name, solution_restrictions_calculator=self.solution_restrictions_calculator, \
@@ -55,7 +55,7 @@ class BVNS(Metaheuristic):
             #Compare with previous proposed solution. If we don't improve anymore, we leave.
             print("Proposed cost in "+neighborhood_name+ ": "+str(new_solution.cost))
             if new_solution.cost>=proposed_solution.cost:
-                print("*************LOCAL MINIMUN FOUND")
+                print("LOCAL MINIMUN FOUND!")
                 return proposed_solution
             proposed_solution=new_solution
 
