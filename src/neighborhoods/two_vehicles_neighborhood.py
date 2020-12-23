@@ -52,10 +52,17 @@ class TwoVehiclesNeighborhood(Neighborhood):
             non_empty_vehicle_routes=self.solution_restrictions_calculator.get_not_empty_vehicle_routes(solution=solution)        
             empty_routes=np.delete(np.array(range(0,solution.vehicle_routes.shape[0])),non_empty_vehicle_routes)
 
-            choices=["NONEMPTY-NONEMPTY","NONEMPTY-EMPTY"]
-            type_of_movement=np.random.choice(a=choices,size=1,replace=False)[0]
+            type_of_movement=""
+            if len(empty_routes)<=0:
+                type_of_movement="NONEMPTY-NONEMPTY"            
+            if len(non_empty_vehicle_routes)<2:
+                type_of_movement="NONEMPTY-EMPTY"
+            if type_of_movement=="":
+                choices=["NONEMPTY-NONEMPTY","NONEMPTY-EMPTY"]
+                type_of_movement=np.random.choice(a=choices,size=1,replace=False)[0]
 
-            if type_of_movement=="NONEMPTY-EMPTY" or len(non_empty_vehicle_routes)<2:
+            #Get vehicle indexes given the type of selection.
+            if type_of_movement=="NONEMPTY-EMPTY":
                 veh1=np.random.choice(a=non_empty_vehicle_routes,size=1)[0]
                 veh2=np.random.choice(a=empty_routes,size=1)[0]
                 return np.array([veh1,veh2],dtype=int)

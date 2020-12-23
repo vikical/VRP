@@ -1,3 +1,5 @@
+import logging
+
 from src.models.solution import Solution
 from src.neighborhoods.two_vehicles_neighborhood import TwoVehiclesNeighborhood
 import numpy as np
@@ -25,6 +27,7 @@ class MoveCustomer(TwoVehiclesNeighborhood):
             return solution
 
         #We change it.
+        logging.debug("change: "+"v"+str(vehicle1)+".n"+str(node_index_in1)+" <-> v"+str(vehicle2)+".n"+str(node_index_in2))
         solution.vehicle_routes[vehicle1][node_index_in1]=node_value_in2
         solution.vehicle_routes[vehicle2][node_index_in2]=node_value_in1
 

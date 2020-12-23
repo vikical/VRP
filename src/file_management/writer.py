@@ -20,3 +20,5 @@ class Writer(object):
             file_id=filein_name.split("_")[-1]
             path_fileoutput=os.sep.join([path_to_directory,fn.PREFFIX_ALLOWED_DISTANCE_VEHICLES+file_id])
             np.savetxt(fname=path_fileoutput, X=veh_distances, fmt='%i', delimiter='\t', newline='\n')
+
+
