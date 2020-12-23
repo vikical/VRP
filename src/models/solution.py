@@ -25,5 +25,8 @@ class Solution(object):
         return np.array_str(a=vehicle_route)
 
 
-
-    
+    def __eq__(self, other):
+        """
+        Define the equality between two solutions
+        """
+        return np.array_equal(self.vehicle_routes,other.vehicle_routes)

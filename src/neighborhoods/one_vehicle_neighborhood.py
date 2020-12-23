@@ -1,3 +1,5 @@
+import logging
+
 from src.models.solution import Solution
 from src.solution_management.solution_restrictions_calculator import SolutionRestrictionsCalculator
 from src.neighborhoods.neighborhood import Neighborhood
@@ -30,7 +32,7 @@ class OneVehicleNeighborhood(Neighborhood):
         index_node1=nodes_involved[0]
         index_node2=nodes_involved[1]
 
-        #print("index_node1:"+str(index_node1)+" index_node2:"+str(index_node2))
+        logging.debug("index_node1:"+str(index_node1)+" index_node2:"+str(index_node2))
 
         #Reverse route and update it.
         new_solution=copy.deepcopy(solution)
@@ -44,7 +46,7 @@ class OneVehicleNeighborhood(Neighborhood):
 
         #Set new cost.
         new_solution.cost=self._update_solution_cost(old_solution=solution,new_solution=new_solution,vehicles_involved=[vehicle_involved])
-        #print("proposed solution.cost="+str(new_solution.cost))
+        logging.debug("proposed solution.cost="+str(new_solution.cost))
 
         return new_solution
 

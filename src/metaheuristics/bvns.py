@@ -13,6 +13,7 @@ from src.metaheuristics.ls import LS
 from src.neighborhoods.neighborhood import Neighborhood
 from src.neighborhoods.neighborhood_factory import NeighborhoodFactory
 
+import logging
 
 class BVNS(Metaheuristic):
     """
@@ -37,7 +38,7 @@ class BVNS(Metaheuristic):
         return self.solution
 
     def exploration_in_neighborhood(self, neighborhood_name)->Solution:
-        print("************* APPLYING "+neighborhood_name+" *************")
+        logging.info("************* APPLYING "+neighborhood_name+" *************")
         neighborhood=NeighborhoodFactory.create_neighborhood(neighborhood_name=neighborhood_name, \
             solution_restrictions_calculator= self.solution_restrictions_calculator)
 
@@ -45,7 +46,7 @@ class BVNS(Metaheuristic):
         while True:
             #Shake solution.
             new_solution=self._shake_solution(neighborhood=neighborhood,solution=proposed_solution)
-            print("SHAKE in "+neighborhood_name+". Shaked cost:"+str(new_solution.cost))
+            logging.info("SHAKE in "+neighborhood_name+". Shaked cost:"+str(new_solution.cost))
 
             #Local Search
             ls=LS(solution=new_solution, neighborhood_name=neighborhood_name, solution_restrictions_calculator=self.solution_restrictions_calculator, \
@@ -53,9 +54,9 @@ class BVNS(Metaheuristic):
             new_solution=ls.run()                        
 
             #Compare with previous proposed solution. If we don't improve anymore, we leave.
-            print("Proposed cost in "+neighborhood_name+ ": "+str(new_solution.cost))
+            logging.info("Proposed cost in "+neighborhood_name+ ": "+str(new_solution.cost))
             if new_solution.cost>=proposed_solution.cost:
-                print("LOCAL MINIMUN FOUND!")
+                logging.info("LOCAL MINIMUN FOUND!")
                 return proposed_solution
             proposed_solution=new_solution
 
