@@ -65,7 +65,12 @@ class BVNS(Metaheuristic):
         """
         Shake the solution
         """
-        return neighborhood.get_neighbor(solution=solution)
+        for index in range(0,10):
+            proposed_solution=neighborhood.get_neighbor(solution=solution)
+            if proposed_solution.is_valid:
+                return proposed_solution
+
+        return solution
     
 
 
