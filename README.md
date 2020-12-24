@@ -1,5 +1,9 @@
 # VRP
 Metaheuristics for a variant of VRP problem where vehicle are limited by a max. allowed distance, different among vehicles.
+Install requirements.txt file to meet python required libraries.
+~~~
+pip install -f requirements.txt
+~~~
 
 # GENERAL CONSIDERATIONS
 Num. vehicles = num. customers = nodes - 1 (the depot)

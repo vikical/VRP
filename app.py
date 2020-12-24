@@ -45,10 +45,10 @@ def man():
 @click.option("--log", default='INFO', help="Log level: 'DEBUG', 'INFO', 'CRITICAL")
 def testbench(din,metaheu,niter,search,init,memory,times4ave,log):
     set_logging(log=log)
-    
+
     logging.info("STARTING TEST BENCH...")
 
-    filename="TESTBENCH_niter_"+str(niter)+"_search_"+str(search)+"_init_"+str(init)+"_memory_"+str(memory)+"_times4ave_"+str(times4ave)
+    filename="TESTBENCH_metaheu_"+metaheu.replace(",","_")+"__niter_"+str(niter)+"_search_"+str(search)+"_init_"+str(init)+"_memory_"+str(memory)+"_times4ave_"+str(times4ave)+".csv"
     path_to_result_file=os.sep.join([din,filename])
     logging.info("The results will stored in:"+str(path_to_result_file))
 

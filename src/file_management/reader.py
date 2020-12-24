@@ -19,14 +19,6 @@ class Reader(object):
         df=pd.read_csv(filepath_or_buffer=path_to_file,delimiter="\n",header=None).dropna(axis=1)
         return df.to_numpy()
 
-    @staticmethod
-    def read_vehicle_allowed_distances_in_directory(path_to_directory:str)->{}:
-        """
-        docstring
-        """
-        #TODO: HACER FUNCIÓN.
-        pass
-
 
     @staticmethod
     def read_distances_between_nodes_in_file(path_to_file:str)->np.ndarray:

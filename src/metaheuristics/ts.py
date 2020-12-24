@@ -21,47 +21,87 @@ class TS(LS):
             search_type=search_type,num_iteration_per_search=num_iteration_per_search, initialization_type=initialization_type)
 
         self.memory=deque(maxlen=memory_size)
+        self.aspiration_parameter=85
+
+        self.best_solution=self.solution
+
+        #Init counters.
+        self.counter_not_improving=0
+        self.counter_worsening=0
+        self.counter_iterations=0
 
 
     def run(self)->Solution:
         """        
-        Run tabu search with memory
+        Run tabu search with memory. The loops stops when we reach a limit of iterations without improving.
+        The limit of iterations is related to num_iterations_per_search. More precisely, it is max(5,num_iterations_per_search/20).
         """
-        emergency_counter=0
-        best_solution=self.solution
-        while True:
-            emergency_counter=emergency_counter+1
-
+        while True:           
             #Find new solution, which may not improve current solution.
             new_solution=self.search()
-            self.__update_solution(new_solution=new_solution)
 
-            #We are improving the solution.
-            if new_solution.cost<best_solution.cost:
-                logging.info("BEST solution till the moment!!!")
-                best_solution=new_solution
-                emergency_counter=0
+            self.__update_counters(new_solution=new_solution)
+            self.__update_solution(new_solution=new_solution)
                 
             #If we reach the emergency counter, we leave with the best solution.
-            if emergency_counter>self.num_iteration_per_search:
+            if self.__emergency_situation_reached()==True:
                 break
 
-        self.solution=best_solution
+        self.solution=self.best_solution
         return self.solution
 
+    def __emergency_situation_reached(self)->bool:
+        """
+        Check the status and decides if the algorithm has to stop.
+        """
+        if self.counter_worsening>max(5,self.num_iteration_per_search/20):#10:
+            logging.info("Reached worsening limit")
+            return True
+        
+        if self.counter_not_improving>max(20,self.num_iteration_per_search/5):#20:
+            logging.info("Reached not-improved limit")
+            return True
+
+        if self.counter_iterations>self.num_iteration_per_search:#100:
+            logging.info("Reached iterations limit")
+            return True
+
+        return False
+
+    def __update_counters(self,new_solution:Solution):
+        """
+        Update the counter which form the algorithm status        
+        """        
+        #Update counters.
+        self.counter_iterations=self.counter_iterations+1
+        self.counter_not_improving=self.counter_not_improving+1
+        self.counter_worsening=self.counter_worsening+1
+
+        #Reset some counters depending on the circumstances.
+        if new_solution.cost<self.solution.cost:
+            self.counter_worsening=0
+        if new_solution.cost<self.best_solution.cost:
+            self.counter_not_improving=0
+
+        logging.debug("counters status:"+str(self.counter_iterations)+" - "+str(self.counter_not_improving)+" - "+str(self.counter_worsening))
 
     def __update_solution(self, new_solution:Solution):
         """
         Update solution in the class field.
         If memory is set, append the new feature into the memory.
         """
+        #Always update current solution and store it in memory.
         self.solution=new_solution
-
         if self.memory.maxlen>0:
             new_solution_feature=self._get_feature(solution=new_solution)
             self.memory.append(new_solution_feature)
         logging.info("Updated solution. New cost:" + str(new_solution.cost))
 
+
+        #Update best solution if we are improving it.
+        if new_solution.cost<self.best_solution.cost:
+            logging.info("BEST solution till the moment!!!")
+            self.best_solution=new_solution
 
 
     def search(self)->Solution: 
@@ -128,7 +168,7 @@ class TS(LS):
         The new solution should be 95% less than the old one to be accepted without restrictions.
         """
         logging.debug("Check aspiration level, best.cost="+str(best_solution.cost)+" worst.cost="+str(worst_solution.cost)+". Improvement:"+str(100*best_solution.cost/worst_solution.cost))
-        if 100*best_solution.cost/worst_solution.cost < 85:
+        if 100*best_solution.cost/worst_solution.cost < self.aspiration_parameter:
             return True
 
         return False
