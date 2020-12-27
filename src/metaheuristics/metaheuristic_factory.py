@@ -21,29 +21,33 @@ class MetaheuristicFactory(object):
 
     @staticmethod
     def create_metaheuristic(metaheuristic:str, solution_restrictions_calculator:SolutionRestrictionsCalculator,\
-        search_type:str, init:str, number_iterations:int, memory_size:int)-> Metaheuristic:
+        search_type:str, init:str, number_iterations:int, memory_size:int,max_running_secs:float)-> Metaheuristic:
         metaheu_obj=None
         if metaheuristic==MetaheuristicFactory.TABU_SEARCH:
             metaheu_obj=TS(solution=None,neighborhood_name=NeighborhoodFactory.MOVE_CUSTOMER, \
                     solution_restrictions_calculator=solution_restrictions_calculator, \
-                    search_type=search_type, initialization_type=init, num_iteration_per_search=number_iterations, memory_size=memory_size)
+                    search_type=search_type, initialization_type=init, num_iteration_per_search=number_iterations,\
+                    max_running_secs=max_running_secs, memory_size=memory_size)
 
         if metaheuristic==MetaheuristicFactory.LOCAL_SEARCH:
             metaheu_obj=LS(solution=None, neighborhood_name=NeighborhoodFactory.MOVE_CUSTOMER, \
                     solution_restrictions_calculator=solution_restrictions_calculator, \
-                    search_type=search_type, initialization_type=init, num_iteration_per_search=number_iterations)
+                    search_type=search_type, initialization_type=init, num_iteration_per_search=number_iterations,\
+                    max_running_secs=max_running_secs)
 
         if metaheuristic==MetaheuristicFactory.BVNS:
             metaheu_obj=BVNS(solution=None, \
                     neighborhood_names=[NeighborhoodFactory.JOIN_CUSTOMERS,NeighborhoodFactory.MOVE_CUSTOMER, NeighborhoodFactory.SWAP_CUSTOMERS, NeighborhoodFactory.REVERSE_ORDER], \
                     solution_restrictions_calculator=solution_restrictions_calculator, \
-                    search_type=search_type, initialization_type=init, num_iteration_per_search=number_iterations)
+                    search_type=search_type, initialization_type=init, num_iteration_per_search=number_iterations,\
+                    max_running_secs=max_running_secs)
 
         if metaheuristic==MetaheuristicFactory.VND:
             metaheu_obj=VND(solution=None, \
                     neighborhood_names=[NeighborhoodFactory.JOIN_CUSTOMERS,NeighborhoodFactory.MOVE_CUSTOMER, NeighborhoodFactory.SWAP_CUSTOMERS, NeighborhoodFactory.REVERSE_ORDER], \
                     solution_restrictions_calculator=solution_restrictions_calculator, \
-                    search_type=search_type, initialization_type=init,num_iteration_per_search=number_iterations)
+                    initialization_type=init,num_iteration_per_search=number_iterations,\
+                    max_running_secs=max_running_secs)
 
 
         return metaheu_obj

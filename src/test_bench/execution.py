@@ -17,11 +17,12 @@ class Execution(object):
     """
     Support the execution of different metaheuristics on different problems.
     """
-    def __init__(self, number_iterations:int,search_type:str,init:str,memory_size:int ):
+    def __init__(self, number_iterations:int,search_type:str,init:str,memory_size:int,max_running_secs:float ):
         self.number_iterations=number_iterations
         self.search_type=search_type
         self.init=init
         self.memory_size=memory_size
+        self.max_running_secs=max_running_secs
 
 
     def testbench(self,problem_instances_files:[{}], metaheuristics=[str],ntimes_for_average:int=100)->pd.DataFrame:
@@ -39,7 +40,7 @@ class Execution(object):
             for metaheuristic in metaheuristics:
                 logging.critical("********************* "+metaheuristic+" on file: "+str(path_to_node_distances)+" *********************")
                 execution_info=self.execute_single_instance_n_times(path_to_node_distances=path_to_node_distances, \
-                    path_to_max_vehicle_distances=path_to_max_vehicle_distances, metaheuristic=metaheuristic)
+                    path_to_max_vehicle_distances=path_to_max_vehicle_distances, metaheuristic=metaheuristic,ntimes_for_average=ntimes_for_average)
                 problem_analysis=problem_analysis+execution_info
 
             all_analysis.append(problem_analysis)
@@ -91,7 +92,7 @@ class Execution(object):
 
         solution_restrictions_calculator=SolutionRestrictionsCalculator(node_distances=node_distances, vehicle_allowed_distances=vehicle_allowed_distances)
         metaheu_obj=MetaheuristicFactory.create_metaheuristic(metaheuristic=metaheuristic, solution_restrictions_calculator=solution_restrictions_calculator, \
-            init=self.init, search_type=self.search_type, number_iterations=self.number_iterations, memory_size=self.memory_size)
+            init=self.init, search_type=self.search_type, number_iterations=self.number_iterations, memory_size=self.memory_size, max_running_secs=self.max_running_secs)
         
         tic=time.time()
         solution=metaheu_obj.run()

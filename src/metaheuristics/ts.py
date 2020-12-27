@@ -16,19 +16,14 @@ class TS(LS):
     """
 
     def __init__(self,neighborhood_name:str,solution:Solution, solution_restrictions_calculator:SolutionRestrictionsCalculator, \
-                search_type:str, num_iteration_per_search:int, initialization_type:str, memory_size:int=10):
+                search_type:str, num_iteration_per_search:int, initialization_type:str, max_running_secs:float, memory_size:int=10):
         super().__init__(neighborhood_name=neighborhood_name, solution=solution, solution_restrictions_calculator=solution_restrictions_calculator, \
-            search_type=search_type,num_iteration_per_search=num_iteration_per_search, initialization_type=initialization_type)
+            search_type=search_type,num_iteration_per_search=num_iteration_per_search, initialization_type=initialization_type, max_running_secs=max_running_secs)
 
         self.memory=deque(maxlen=memory_size)
         self.aspiration_parameter=85
 
         self.best_solution=self.solution
-
-        #Init counters.
-        self.counter_not_improving=0
-        self.counter_worsening=0
-        self.counter_iterations=0
 
 
     def run(self)->Solution:
@@ -39,51 +34,18 @@ class TS(LS):
         while True:           
             #Find new solution, which may not improve current solution.
             new_solution=self.search()
-
-            self.__update_counters(new_solution=new_solution)
+            
             self.__update_solution(new_solution=new_solution)
                 
             #If we reach the emergency counter, we leave with the best solution.
-            if self.__emergency_situation_reached()==True:
+            if self._emergency_situation_reached()==True:
                 break
 
         self.solution=self.best_solution
         return self.solution
 
-    def __emergency_situation_reached(self)->bool:
-        """
-        Check the status and decides if the algorithm has to stop.
-        """
-        if self.counter_worsening>max(5,self.num_iteration_per_search/20):#10:
-            logging.info("Reached worsening limit")
-            return True
         
-        if self.counter_not_improving>max(20,self.num_iteration_per_search/5):#20:
-            logging.info("Reached not-improved limit")
-            return True
 
-        if self.counter_iterations>self.num_iteration_per_search:#100:
-            logging.info("Reached iterations limit")
-            return True
-
-        return False
-
-    def __update_counters(self,new_solution:Solution):
-        """
-        Update the counter which form the algorithm status        
-        """        
-        #Update counters.
-        self.counter_iterations=self.counter_iterations+1
-        self.counter_not_improving=self.counter_not_improving+1
-        self.counter_worsening=self.counter_worsening+1
-
-        #Reset some counters depending on the circumstances.
-        if new_solution.cost<self.solution.cost:
-            self.counter_worsening=0
-        if new_solution.cost<self.best_solution.cost:
-            self.counter_not_improving=0
-
-        logging.debug("counters status:"+str(self.counter_iterations)+" - "+str(self.counter_not_improving)+" - "+str(self.counter_worsening))
 
     def __update_solution(self, new_solution:Solution):
         """

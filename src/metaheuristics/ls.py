@@ -14,9 +14,10 @@ class LS(Metaheuristic):
     """
 
     def __init__(self,neighborhood_name:str,solution:Solution, solution_restrictions_calculator:SolutionRestrictionsCalculator, \
-                search_type:str, num_iteration_per_search:int, initialization_type:str):
+                search_type:str, num_iteration_per_search:int, initialization_type:str,max_running_secs:float):
         super().__init__(solution=solution, solution_restrictions_calculator=solution_restrictions_calculator, \
-            search_type=search_type,num_iteration_per_search=num_iteration_per_search, initialization_type=initialization_type)
+            search_type=search_type,num_iteration_per_search=num_iteration_per_search, initialization_type=initialization_type, \
+            max_running_secs=max_running_secs)
         self.neighborhood=NeighborhoodFactory.create_neighborhood(neighborhood_name=neighborhood_name, \
             solution_restrictions_calculator=self.solution_restrictions_calculator)
 
@@ -60,6 +61,10 @@ class LS(Metaheuristic):
                     return solution_in_loop
                 proposed_solution=solution_in_loop #GREEDY_SEARCH.
             
+            #If we reach the emergency counter, we leave with the best solution.
+            if self._emergency_situation_reached()==True:
+                break
+
         return proposed_solution
 
 
