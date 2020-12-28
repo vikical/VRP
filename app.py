@@ -43,12 +43,13 @@ def man():
 @click.option("--memory", default=0, help="For tabú search: size of the memory where solutions are stored.")
 @click.option("--times4ave",default=100, help="Number of times a problem instances is solve, to get an evarage of the solutions")
 @click.option("--log", default='INFO', help="Log level: 'DEBUG', 'INFO', 'CRITICAL")
-def testbench(din,metaheu,niter,search,init,memory,times4ave,log):
+@click.option("--maxs", default=3.0, help="Max seconds an algorithm will run")
+def testbench(din,metaheu,niter,search,init,memory,times4ave,log,maxs):
     set_logging(log=log)
 
     logging.info("STARTING TEST BENCH...")
 
-    filename="TESTBENCH_metaheu_"+metaheu.replace(",","_")+"__niter_"+str(niter)+"_search_"+str(search)+"_init_"+str(init)+"_memory_"+str(memory)+"_times4ave_"+str(times4ave)+".csv"
+    filename="TESTBENCH_metaheu_"+metaheu.replace(",","_")+"__niter_"+str(niter)+"_search_"+str(search)+"_init_"+str(init)+"_memory_"+str(memory)+"_times4ave_"+str(times4ave)+"_maxs_"+str(maxs)+".csv"
     path_to_result_file=os.sep.join([din,filename])
     logging.info("The results will stored in:"+str(path_to_result_file))
 
@@ -56,7 +57,7 @@ def testbench(din,metaheu,niter,search,init,memory,times4ave,log):
     logging.info("Files where problem instances are stored... READ.")
 
     logging.info("Starging test bench. It may last several minutes depending on the parameters chosen.")
-    execution=Execution(number_iterations=niter,search_type=search,init=init,memory_size=memory)
+    execution=Execution(number_iterations=niter,search_type=search,init=init,memory_size=memory,max_running_secs=maxs)
     df_result=execution.testbench(problem_instances_files=problem_instances_files,metaheuristics=metaheu.split(","),ntimes_for_average=times4ave)
     logging.info("FINISHED")
     
@@ -76,12 +77,13 @@ def testbench(din,metaheu,niter,search,init,memory,times4ave,log):
 @click.option("--init", default=Metaheuristic.RANDOM_INIT, help="Dedices whether to init randomly ('random'), one customer to one client ('one2one'), a group of nodes ('group') ")
 @click.option("--memory", default=0, help="For tabú search: size of the memory where solutions are stored.")
 @click.option("--log", default='INFO', help="Log level: 'DEBUG', 'INFO', 'CRITICAL")
-def solve(din,problem,metaheu,niter,search,init,memory,log):
+@click.option("--maxs", default=3, help="Max seconds an algorithm will run")
+def solve(din,problem,metaheu,niter,search,init,memory,log,maxs):
     set_logging(log=log)
 
     path_to_node_distances=os.sep.join([din,fn.PREFFIX_DISTANCE_BETWEEN_NODES+str(problem)+".txt"])
     path_to_max_vehicle_distances=os.sep.join([din,fn.PREFFIX_ALLOWED_DISTANCE_VEHICLES+str(problem)+".txt"])
-    execution=Execution(number_iterations=niter,search_type=search,init=init,memory_size=memory)
+    execution=Execution(number_iterations=niter,search_type=search,init=init,memory_size=memory,max_running_secs=maxs)
     (solution,elapsed_time)=execution.execute_single_instance_once(path_to_node_distances=path_to_node_distances, \
         path_to_max_vehicle_distances=path_to_max_vehicle_distances, metaheuristic=metaheu)
     
