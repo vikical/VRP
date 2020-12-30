@@ -9,7 +9,7 @@ def test_move_customer_from_one_route_to_another():
     vehicle_routes=np.array([[1, 2, 3, 4, 5, 0, 0, 0], [11, 12, 13, 14, 15, 0, 0, 0]])
     solution=Solution(vehicle_routes=vehicle_routes)
     move_customer=MoveCustomer(solution_restrictions_calculator=None)
-    new_solution=move_customer.move_nodes(solution=solution,vehicle1=0, vehicle2=1, node_index_in1=3,node_index_in2=0)
+    new_solution=move_customer._move_nodes(solution=solution,vehicle1=0, vehicle2=1, node_index_in1=3,node_index_in2=0)
 
     route1=new_solution.vehicle_routes[0]
     route2=new_solution.vehicle_routes[1]
@@ -17,7 +17,7 @@ def test_move_customer_from_one_route_to_another():
     assert route1[0]==1 , "r1: 1st element should be 1"
     assert route1[1]==2 , "r1: 2nd element should be 2"
     assert route1[2]==3 , "r1: 3rd element should be 3"
-    assert route1[3]==11 , "r1: 4th element should be 4"
+    assert route1[3]==11 , "r1: 4th element should be 11"
     assert route1[4]==5 , "r1: 5th element should be 5"
     assert route1[5]==0 , "r1: 6th element should be 0"
     assert route1[6]==0 , "r1: 7th element should be 0"

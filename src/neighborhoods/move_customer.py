@@ -12,12 +12,19 @@ class MoveCustomer(TwoVehiclesNeighborhood):
 
     def _operation_between_vehicle_routes(self, solution:Solution,vehicle1:int, vehicle2:int)->Solution:
         """
-        Move node_index_in1 from vehicle1 to node_index_in2 to vehicle2 and viceversa.
+        Choose nodes from vehicles 1 and 2 and change them.
         """
-        #Get the index which contain will be moved
+        #Get the index which contain the nodes that will be moved
         node_index_in1=super()._get_node_index_from_route(solution.vehicle_routes[vehicle1])
         node_index_in2=super()._get_node_index_from_route(solution.vehicle_routes[vehicle2])
+        
+        return self._move_nodes(solution=solution,vehicle1=vehicle1, vehicle2=vehicle2, node_index_in1=node_index_in1, node_index_in2=node_index_in2)
 
+
+    def _move_nodes(self, solution: Solution, vehicle1:int, vehicle2:int, node_index_in1:int, node_index_in2)->Solution:
+        """
+        Move node_index_in1 from vehicle1 to node_index_in2 to vehicle2 and viceversa.
+        """
         #Get the customer in that nodes.
         node_value_in1=solution.vehicle_routes[vehicle1][node_index_in1]
         node_value_in2=solution.vehicle_routes[vehicle2][node_index_in2]
