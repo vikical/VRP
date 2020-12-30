@@ -127,7 +127,7 @@ class TS(LS):
 
     def _check_aspiration_level(self, best_solution:Solution, worst_solution:Solution)->bool:
         """
-        The new solution should be 95% less than the old one to be accepted without restrictions.
+        The new solution should be 85% less than the old one to be accepted without restrictions.
         """
         logging.debug("Check aspiration level, best.cost="+str(best_solution.cost)+" worst.cost="+str(worst_solution.cost)+". Improvement:"+str(100*best_solution.cost/worst_solution.cost))
         if 100*best_solution.cost/worst_solution.cost < self.aspiration_parameter:
