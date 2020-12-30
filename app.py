@@ -37,13 +37,13 @@ def man():
 @vrp.command()
 @click.option("--din", type=click.Path(exists=True), help="Path to the directory where files with distances between nodes and for vehicles are located. This files should follow reg. exp. dist_NUMBER.txt and veh_dist_NUMBER.txt")
 @click.option("--metaheu", default="" , help="Comma-separed list of metaheuristics which are going to be compare. Options: ls (local search); ts (tabu search); vnd; bvns")
-@click.option("--niter", default=1000, help="Number of iters per each LS. It is also related to stop criteria in TS.")
+@click.option("--niter", default=100, help="Number of iters per each local search.")
 @click.option("--search", default=Metaheuristic.GREEDY_SEARCH, help="Decides between greedy search ('greedy') or anxious search ('anxious')")
 @click.option("--init", default=Metaheuristic.RANDOM_INIT, help="Dedices whether to init randomly ('random'), one customer to one client ('one2one'), a group of nodes ('group') ")
 @click.option("--memory", default=0, help="For tabú search: size of the memory where solutions are stored.")
-@click.option("--times4ave",default=100, help="Number of times a problem instances is solve, to get an evarage of the solutions")
-@click.option("--log", default='INFO', help="Log level: 'DEBUG', 'INFO', 'CRITICAL")
+@click.option("--log", default='CRITICAL', help="Log level: 'DEBUG', 'INFO', 'CRITICAL")
 @click.option("--maxs", default=3.0, help="Max seconds an algorithm will run")
+@click.option("--times4ave",default=100, help="Number of times a problem instances is solved, to get an average of the solutions")
 def testbench(din,metaheu,niter,search,init,memory,times4ave,log,maxs):
     set_logging(log=log)
 
@@ -72,12 +72,12 @@ def testbench(din,metaheu,niter,search,init,memory,times4ave,log,maxs):
 @click.option("--din", type=click.Path(exists=True), help="Path to the directory where files with distances between nodes and for vehicles are located. This files should follow reg. exp. dist_NUMBER.txt and veh_dist_NUMBER.txt")
 @click.option("--problem", default="0", help="Number of the problem instance to be solved, i.e. the NUMBER in the dist_NUMBER.txt files")
 @click.option("--metaheu", help="Type of metaheuristic: ls (local search); ts (tabu search); vnd; bvns")
-@click.option("--niter", default=1000, help="Number of iters per each LS")
+@click.option("--niter", default=10, help="Number of iters per each local search")
 @click.option("--search", default=Metaheuristic.GREEDY_SEARCH, help="Decides between greedy search ('greedy') or anxious search ('anxious')")
 @click.option("--init", default=Metaheuristic.RANDOM_INIT, help="Dedices whether to init randomly ('random'), one customer to one client ('one2one'), a group of nodes ('group') ")
 @click.option("--memory", default=0, help="For tabú search: size of the memory where solutions are stored.")
-@click.option("--log", default='INFO', help="Log level: 'DEBUG', 'INFO', 'CRITICAL")
-@click.option("--maxs", default=3, help="Max seconds an algorithm will run")
+@click.option("--log", default='CRITICAL', help="Log level: 'DEBUG', 'INFO', 'CRITICAL")
+@click.option("--maxs", default=3.0, help="Max seconds an algorithm will run")
 def solve(din,problem,metaheu,niter,search,init,memory,log,maxs):
     set_logging(log=log)
 
