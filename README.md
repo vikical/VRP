@@ -51,7 +51,8 @@ The result of this execution will show the solution **cost** and the solution **
 
 Example:
 ~~~
-python app.py solve --din ./my_data --problem 0 --metaheu bvns --niter 1000 --init random --maxs 5 --log CRITICAL
+python app.py solve --din ./my_data --problem 0 --metaheu bvns --niter 10 --search anxious --init random --maxs 5 --log INFO
+python app.py solve --din ./my_data --problem 0 --metaheu ts --niter 10 --search anxious --init random --memory 15 --maxs 5 --log CRITICAL
 ~~~
 
 # RUNNING TEST BENCH
@@ -84,7 +85,7 @@ Where the options are:
 
 Example:
 ~~~
-python app.py testbench --din ./my_data/30nodes --metaheu ls,vnd,bvns,ts --memory 10 --niter 10 --init group --search greedy --times4ave 100 --maxs 1
+python app.py testbench --din ./my_data/30nodes --metaheu ls,vnd,bvns,ts --niter 10 --search greedy  --init group --memory 10  --maxs 1 --times4ave 100 --log CRITICAL
 ~~~
 
 The result of this execution will be a .csv, stored in *path_to_directory* where each column will be the values obtained after *time_for_average* executions of each metaheuristic:
