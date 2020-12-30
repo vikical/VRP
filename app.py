@@ -37,7 +37,7 @@ def man():
 @vrp.command()
 @click.option("--din", type=click.Path(exists=True), help="Path to the directory where files with distances between nodes and for vehicles are located. This files should follow reg. exp. dist_NUMBER.txt and veh_dist_NUMBER.txt")
 @click.option("--metaheu", default="" , help="Comma-separed list of metaheuristics which are going to be compare. Options: ls (local search); ts (tabu search); vnd; bvns")
-@click.option("--niter", default=100, help="Number of iters per each local search.")
+@click.option("--niter", default=10, help="Number of iters per each local search.")
 @click.option("--search", default=Metaheuristic.GREEDY_SEARCH, help="Decides between greedy search ('greedy') or anxious search ('anxious')")
 @click.option("--init", default=Metaheuristic.RANDOM_INIT, help="Dedices whether to init randomly ('random'), one customer to one client ('one2one'), a group of nodes ('group') ")
 @click.option("--memory", default=0, help="For tabú search: size of the memory where solutions are stored.")
