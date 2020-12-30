@@ -1,5 +1,5 @@
 # VRP
-Metaheuristics for a variant of VRP problem where vehicles are limited by a max. allowed distance, different among vehicles.
+Metaheuristics for a variant of VRP problem where vehicles are limited by a max. allowed distance, different among vehicles...
 
 
 # GENERAL CONSIDERATIONS
