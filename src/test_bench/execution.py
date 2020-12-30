@@ -77,7 +77,7 @@ class Execution(object):
             if best_cost<0 or best_cost>solution.cost:
                 best_cost=solution.cost 
 
-        return (total_elapsed_time/100, total_cost/100, best_cost)
+        return (total_elapsed_time/ntimes_for_average, total_cost/ntimes_for_average, best_cost)
 
 
     
