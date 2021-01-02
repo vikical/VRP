@@ -94,7 +94,8 @@ LS_average_execution_time ; LS_average_cost ; LS_best_cost ; VND_average_executi
 ... BVNS_average_execution_time; BVNS_average_cost; BVNS_best_cost; Tabu_average_execution_time; Tabu_average_cost ; Tabu_best_cost 
 ~~~
 
-There is a script to run several examples at once: **test_bench.sh**. In the directory ./results the output files of the execution of this script can be found. Apart from that, individual .ods files have been added, where graphs based on the obtained info are displayed. A **Summary.ods** gathers all this information and add new graphs comparing results between executions with different parameters.
+There are two scripts to run several examples at once. For memory size analysis: **test_bench_ts.sh**. For metaheuristics comparison: **test_bench.sh**.
+In the directory ./results the output files of the execution of this script can be found. Apart from that, individual .ods files have been added, where graphs based on the obtained info are displayed. A **Summary.ods** gathers all this information and add new graphs comparing results between executions with different parameters.
 
 # TEST
 From VRP root folder invoke:
